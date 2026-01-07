@@ -1,0 +1,170 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.header-top {
+  background: #2874f0;
+  padding: 12px 0;
+}
+
+.container {
+  max-width: 1248px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  min-width: 140px;
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+  font-style: italic;
+  letter-spacing: -0.5px;
+}
+
+.logo-tagline {
+  font-size: 11px;
+  color: #fff;
+  font-style: italic;
+}
+
+.plus {
+  color: #ffe500;
+  font-weight: 600;
+}
+
+.search-bar {
+  flex: 1;
+  max-width: 560px;
+  display: flex;
+  background: #fff;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;
+  padding: 10px 16px;
+  font-size: 14px;
+  outline: none;
+}
+
+.search-btn {
+  background: #fff;
+  border: none;
+  padding: 0 16px;
+  cursor: pointer;
+  color: #2874f0;
+  display: flex;
+  align-items: center;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-left: auto;
+}
+
+.header-link,
+.cart-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.header-link:hover,
+.cart-link:hover {
+  opacity: 0.85;
+}
+
+.cart-link {
+  position: relative;
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -12px;
+  background: #ff6161;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+}
+
+.header-nav {
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.header-nav .container {
+  gap: 32px;
+  padding: 12px 16px;
+  overflow-x: auto;
+}
+
+.nav-link {
+  color: #212121;
+  text-decoration: none;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: color 0.2s;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  color: #2874f0;
+}
+
+@media (max-width: 768px) {
+  .header-top .container {
+    flex-wrap: wrap;
+  }
+
+  .search-bar {
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 8px;
+  }
+
+  .header-actions {
+    gap: 16px;
+  }
+
+  .header-link span,
+  .cart-link span {
+    display: none;
+  }
+
+  .logo {
+    min-width: auto;
+  }
+
+  .header-nav .container {
+    gap: 16px;
+  }
+}
