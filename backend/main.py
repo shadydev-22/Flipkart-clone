@@ -22,7 +22,11 @@ app = FastAPI(title="Flipkart Clone API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://astounding-ganache-26c4c5.netlify.app",
+        "*" # Fallback, though credentials=True + "*" can be tricky in some browsers
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
