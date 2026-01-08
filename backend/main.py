@@ -108,6 +108,10 @@ class OrderResponse(BaseModel):
 def read_root():
     return {"message": "Flipkart Clone API"}
 
+@app.get("/healthz")
+def healthz():
+    return {"status": "ok"}
+
 @app.get("/api/categories")
 def get_categories(db: Session = Depends(get_db)):
     categories = db.query(Category).all()
@@ -390,5 +394,6 @@ def check_wishlist(product_id: str, db: Session = Depends(get_db)):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
 
