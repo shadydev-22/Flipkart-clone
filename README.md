@@ -36,4 +36,3 @@ To bridge the gap between local development and cloud deployment, I implemented 
 - `POST /api/admin/seed` - Populate production database
 
 ---
-*Created for educational purposes.*
