@@ -1,10 +1,14 @@
+import React from 'react'; // Added React import for React.useState
 import { Link, useNavigate } from 'react-router-dom'
-import { useCart } from '../context/CartContext'
+import { useCart } from '../context/CartContext.jsx'
+import axios from 'axios'
+import './ProductListPage.css' // Added as per instruction
 import './CartPage.css'
 
 function CartPage() {
-  const { cartItems, updateCartItem, removeFromCart, getCartTotal } = useCart()
+  const { cartItems, updateCartItem, removeFromCart, getCartTotal, clearCart } = useCart()
   const navigate = useNavigate()
+  const [loading, setLoading] = React.useState(false)
 
   const handleQuantityChange = (cartItemId, newQuantity) => {
     if (newQuantity > 0) {
@@ -16,12 +20,13 @@ function CartPage() {
     removeFromCart(cartItemId)
   }
 
-  const handleCheckout = () => {
+  const handlePlaceOrder = () => {
     navigate('/checkout')
   }
 
   const cartTotal = getCartTotal()
   const deliveryCharge = cartTotal > 500 ? 0 : 40
+  const totalAmount = cartTotal + deliveryCharge; // New variable for total amount
 
   if (cartItems.length === 0) {
     return (
@@ -29,7 +34,7 @@ function CartPage() {
         <div className="container">
           <div className="empty-cart">
             <svg width="80" height="80" viewBox="0 0 24 24" fill="none">
-              <path d="M9 2L7.5 5M17 2L18.5 5M3 5H21L19 19H5L3 5ZM10 9V11M14 9V11" stroke="#878787" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M9 2L7.5 5M17 2L18.5 5M3 5H21L19 19H5L3 5ZM10 9V11M14 9V11" stroke="#878787" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             <h2>Your cart is empty!</h2>
             <p>Add items to it now.</p>
@@ -50,6 +55,7 @@ function CartPage() {
         <div className="cart-content">
           <div className="cart-items-section">
             {cartItems.map((item) => {
+              if (!item.product) return null
               const primaryImage = item.product.images?.find(img => img.is_primary) || item.product.images?.[0]
               const itemTotal = item.quantity * parseFloat(item.product.price)
 
@@ -116,36 +122,26 @@ function CartPage() {
 
           <div className="cart-summary-section">
             <div className="summary-card">
-              <h2 className="summary-title">Price Details</h2>
-
-              <div className="summary-row">
+              <h3>Price Details</h3>
+              <div className="price-row">
                 <span>Price ({cartItems.length} items)</span>
                 <span>₹{cartTotal.toLocaleString('en-IN')}</span>
               </div>
-
-              <div className="summary-row">
+              <div className="price-row">
                 <span>Delivery Charges</span>
                 <span className={deliveryCharge === 0 ? 'free' : ''}>
                   {deliveryCharge === 0 ? 'FREE' : `₹${deliveryCharge}`}
                 </span>
+                {cartTotal > 500 && (
+                  <div className="savings-message">
+                    You will save ₹{deliveryCharge} on this order
+                  </div>
+                )}
+
+                <button className="checkout-btn" onClick={handlePlaceOrder}>
+                  {loading ? 'Placing Order...' : 'Place Order'}
+                </button>
               </div>
-
-              <div className="summary-divider"></div>
-
-              <div className="summary-row total">
-                <span>Total Amount</span>
-                <span>₹{(cartTotal + deliveryCharge).toLocaleString('en-IN')}</span>
-              </div>
-
-              {cartTotal > 500 && (
-                <div className="savings-message">
-                  You will save ₹{deliveryCharge} on this order
-                </div>
-              )}
-
-              <button className="checkout-btn" onClick={handleCheckout}>
-                Place Order
-              </button>
             </div>
           </div>
         </div>

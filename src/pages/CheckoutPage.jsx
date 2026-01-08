@@ -42,7 +42,7 @@ function CheckoutPage() {
         is_default: false
       })
 
-      const addressId = addressResponse.data[0].id
+      const addressId = addressResponse.data.id
 
       const orderResponse = await axios.post('/api/orders', {
         address_id: addressId,

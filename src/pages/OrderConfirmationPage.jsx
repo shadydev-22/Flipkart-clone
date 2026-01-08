@@ -42,8 +42,8 @@ function OrderConfirmationPage() {
         <div className="confirmation-card">
           <div className="success-icon">
             <svg width="80" height="80" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="10" stroke="#388e3c" strokeWidth="2"/>
-              <path d="M8 12L11 15L16 9" stroke="#388e3c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="12" cy="12" r="10" stroke="#388e3c" strokeWidth="2" />
+              <path d="M8 12L11 15L16 9" stroke="#388e3c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
 
@@ -89,7 +89,7 @@ function OrderConfirmationPage() {
           <div className="order-items-card">
             <h3>Order Items</h3>
             <div className="order-items-list">
-              {order.order_items.map((item) => {
+              {order.items.map((item) => {
                 const primaryImage = item.product?.images?.find(img => img.is_primary) || item.product?.images?.[0]
 
                 return (
@@ -102,7 +102,7 @@ function OrderConfirmationPage() {
                           <div className="item-qty">Quantity: {item.quantity}</div>
                         </div>
                         <div className="item-price">
-                          ₹{(item.quantity * parseFloat(item.price)).toLocaleString('en-IN')}
+                          ₹{(item.quantity * parseFloat(item.price_at_purchase)).toLocaleString('en-IN')}
                         </div>
                       </>
                     )}

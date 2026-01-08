@@ -71,26 +71,32 @@ All tables are protected with Row Level Security (RLS) policies.
 ### Prerequisites
 - Node.js 16+ and npm
 - Python 3.8+
-- Supabase account
 
 ### 1. Clone the Repository
 ```bash
 cd Flipkart-clone
 ```
 
-### 2. Database Setup (Supabase)
-The database schema and sample data have already been set up in Supabase. The database includes:
-- 6 product categories
-- 14 sample products across multiple categories
-- Product images
-- A default user account
+### 2. Database Setup (Local PostgreSQL)
 
-### 3. Environment Variables
-Create a `.env` file in the root directory with your Supabase credentials:
-```
-VITE_SUPABASE_URL=your-supabase-url
-VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
-```
+The project is configured to use a local PostgreSQL database.
+
+1. Create a database named `flipkart_clone`:
+   ```bash
+   createdb flipkart_clone
+   ```
+
+2. Create a `.env` file in the root directory:
+   ```bash
+   DATABASE_URL=postgresql://user:password@localhost:5432/flipkart_clone
+   ```
+
+3. Initialize the database:
+   ```bash
+   # From root directory
+   python backend/init_db.py
+   python backend/seed.py
+   ```
 
 ### 4. Install Frontend Dependencies
 ```bash
