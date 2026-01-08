@@ -11,7 +11,7 @@ import string
 from uuid import UUID
 from dotenv import load_dotenv
 
-from database import get_db
+from database import get_db, engine, Base
 # Note: imported classes must match models.py
 from models import Category, Product, ProductImage, CartItem, Address, Order, OrderItem, User, WishlistItem
 
@@ -19,6 +19,10 @@ from models import Category, Product, ProductImage, CartItem, Address, Order, Or
 load_dotenv()
 
 app = FastAPI(title="Flipkart Clone API")
+
+# Create tables on startup
+Base.metadata.create_all(bind=engine)
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -110,7 +114,17 @@ class OrderResponse(BaseModel):
 
 @app.get("/")
 def read_root():
-    return {"message": "Flipkart Clone API"}
+    return {"message": "Flipkart Clone API", "status": "online"}
+
+@app.post("/api/admin/seed")
+def seed_production_db(db: Session = Depends(get_db)):
+    # This is a helper to seed the DB on Render
+    from seed import seed_data
+    try:
+        seed_data(db)
+        return {"message": "Database seeded successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/healthz")
 def healthz():

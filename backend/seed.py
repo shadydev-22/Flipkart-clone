@@ -1,9 +1,7 @@
 from database import SessionLocal
 from models import Category, Product, ProductImage, User, Order, OrderItem, WishlistItem
 
-def seed_db():
-    db = SessionLocal()
-    
+def seed_data(db):
     try:
         # Check if data exists
         if db.query(Category).first():
@@ -1174,4 +1172,5 @@ def seed_db():
         db.close()
 
 if __name__ == "__main__":
-    seed_db()
+    db = SessionLocal()
+    seed_data(db)
