@@ -3,7 +3,6 @@ from models import Category, Product, ProductImage, User, Order, OrderItem, Wish
 
 def seed_data(db):
     try:
-        # Check if data exists
         if db.query(Category).first():
             print("Database already contains data. Clearing and reseeding...")
             # Clear existing data in correct order (respecting foreign keys)
